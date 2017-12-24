@@ -1,10 +1,11 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h1 class = "text-primary">{{'冷知识'}}</h1>
-    <h2>{{'这是一个用于与他人分享tips的app！'}}</h2>
-    <h4>{{'在这个app里，你可以与他人分享某一科目的学习心得与考试易错点，互相学习进步'}}</h4>
-    <h3>{{'选择你的科目'}}</h3>
+    <h1 class = "text-primary">{{'我要当学霸'}}</h1>
+    <h4>{{'制作人：王子阳，王鑫伟，李嘉昊'}}</h4>
+    <h2>{{'这是一个用来控ji住你ji己的app！'}}</h2>
+    <h4>{{'在这个app里，你可以通过各种蜜汁操作提高复习效率，走上人生巅峰'}}</h4>
+    <h3>{{'选择一种蜜汁操作'}}</h3>
     <!-- <input type="text" v-model="info">-->
     <p>
     <select v-model="selected">  
@@ -22,7 +23,7 @@ export default {
   data () {
     return {
         info : '',
-        items:[{text:'Todo list',value:'\qd2'},{text:'我要当学霸',value:'\qd3'}],  
+        items:[{text:'愧疚学习法',value:'\qd2'},{text:'放松一下，冷知识',value:'\qd4'},{text:'我要当学霸',value:'\qd3'}],  
         selected:'',
         styles:{ color : 'white', backgroundColor: 'blue'}
     }

@@ -3,7 +3,7 @@
   	<div class="qd3">
     	<img src="../assets/picture.jpg">
     <h1>hello world</h1>
-    <button id="back-btn" v-if="!isCountDown">Back to catagory</button>
+    <button id="back-btn" v-if="!isCountDown" @click='toggle'>Back to catagory</button>
     <h1>我要当学霸</h1>
     <h1><span class="time" v-text="hour" @click="setTime"></span> 时
       <span class="time" v-text="minute" @click="setTime"></span> 分
@@ -144,7 +144,9 @@ export default {
         }, 1000);
       }
     },
-
+    toggle:function () {
+      this.$router.push('/');
+    }
   }
 }
 </script>
