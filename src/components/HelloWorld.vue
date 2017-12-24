@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h1 class = "text-primary">{{'Share Your Tips!'}}</h1>
     <h2>{{'这是一个用于与他人分享冷知识的app！'}}</h2>
     <h3>{{'选择你要去哪'}}</h3>
     <!-- <input type="text" v-model="info">-->

@@ -1,7 +1,6 @@
 
 <template>
   	<div class="qd3">
-    	<h1 class = "text-primary">{{'Share Your Tips!'}}</h1>
 		<h2>{{'这是一个用于与他人分享冷知识的app！'}}</h2>
 		<footer>你位于——<cite title="Source Title" style="font-size: 30px">ics</cite></footer>
 
