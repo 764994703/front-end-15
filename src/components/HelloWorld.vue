@@ -1,8 +1,10 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>{{'这是一个用于与他人分享冷知识的app！'}}</h2>
-    <h3>{{'选择你要去哪'}}</h3>
+    <h1 class = "text-primary">{{'冷知识'}}</h1>
+    <h2>{{'这是一个用于与他人分享tips的app！'}}</h2>
+    <h4>{{'在这个app里，你可以与他人分享某一科目的学习心得与考试易错点，互相学习进步'}}</h4>
+    <h3>{{'选择你的科目'}}</h3>
     <!-- <input type="text" v-model="info">-->
     <p>
     <select v-model="selected">  
@@ -20,7 +22,7 @@ export default {
   data () {
     return {
         info : '',
-        items:[{text:'冷知识',value:'\qd2'},{text:'查询网址',value:'\qd3'}],  
+        items:[{text:'Todo list',value:'\qd2'},{text:'我要当学霸',value:'\qd3'}],  
         selected:'',
         styles:{ color : 'white', backgroundColor: 'blue'}
     }
