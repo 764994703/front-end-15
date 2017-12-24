@@ -2,15 +2,14 @@
 <template>
   	<div class="qd3">
     	<img src="../assets/picture.jpg">
-    <h1>hello world</h1>
-    <button id="back-btn" v-if="!isCountDown" @click='toggle'>Back to catagory</button>
-    <h1>我要当学霸</h1>
-    <h1><span class="time" v-text="hour" @click="setTime"></span> 时
+
+      <h1 id="title">我要当学霸!</h1>
+    <h3>Tip：君子言必行行必果，约定好的学习时间要做到！否则会系统会惩罚你！</h3>
+    <h1>{{msg}}学习时间： <span class="time" v-text="hour" @click="setTime"></span> 时
       <span class="time" v-text="minute" @click="setTime"></span> 分
       <span class="time" v-text="second" @click="setTime"></span> 秒</h1>
 
       <div v-if="showList">
-        <h2 >设置不可取消学习时间</h2>
         <select class="select-list" id="setHour">
           <option value="0">0</option>
           <option value="1">1</option>
@@ -86,26 +85,43 @@
           <option value="58">58</option>
           <option value="59">59</option>
         </select>
-        <p class="unit">分  </p>
-        <button id="confirm-time" @click="changeTime">开始学习</button>
+        <p class="unit">分        </p>
+        <button class="btn" id="confirm-time" @click="changeTime">开始学习</button>
       </div>
+
+      <div v-if="isCountDown">
+        <button class="btn" @click="pauseStudy">中断学习</button>
+        <button class="btn" @click="continueStudy">继续学习</button>
+      </div>
+
+    <br/>
+    <br/>
+
+    <button class="btn" id="back-btn" v-if="!isCountDown" @click='toggle'>Back to catagory</button>
   	</div>
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld'
 import HelloWorld from '@/components/HelloWorld'
 
 export default {
   	name: 'HelloWorld',
-  	data: function(){
+data: function(){
     return {
       hour: 0,
       minute: 0,
       second: 0,
       showList: false,
       isCountDown: false,
-      timer: null
+      isPaused: false,
+      timer: null,
+      punisher: null,
+      msg:'',
+      items: ["国强爸爸的算法看完了没有啊！", "ICS这周的作业做了没有啊！",
+        "数据结构早就忘光了还不去看啊！","基电就快考试了复习过了没啊！",
+        "电工老师讲的还记不记得啊！","大物会做一点点了没有啊！",
+        "任爹的前端写完了没啊！","那你还不赶快去学习啊！",
+      ]
     }
   },
   components: {
@@ -113,36 +129,59 @@ export default {
   },
   methods:{
     setTime:function(){
-      this.showList = true
+      this.showList = true;
+      this.msg = "设置"
     },
     changeTime: function() {
       this.hour = document.getElementById("setHour").value;
       this.minute = document.getElementById("setMinute").value;
+      this.msg = "剩余";
 
       if (!this.timer){
         this.isCountDown = true;
-        console.log("1");
+        this.showList = false;
 
         this.timer = setInterval(()=>{
-          if ((this.hour == 0) && (this.minute == 0) && (this.second == 0)){
-            this.isCountDown = false;
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-          else{
-            console.log("2");
-            this.second -= 1;
-            if (this.second < 0){
-              this.minute -= 1;
-              this.second += 60;
+          if (!this.ispaused) {
+            if ((this.hour == 0) && (this.minute == 0) && (this.second == 0)) {
+              this.isCountDown = false;
+              clearInterval(this.timer);
+              this.timer = null;
+              this.msg = "";
             }
-            if (this.minute < 0){
-              this.hour -= 1;
-              this.minute += 60;
+            else {
+              this.second -= 1;
+              if (this.second < 0) {
+                this.minute -= 1;
+                this.second += 60;
+              }
+              if (this.minute < 0) {
+                this.hour -= 1;
+                this.minute += 60;
+              }
             }
           }
         }, 1000);
       }
+    },
+    pauseStudy: function(){
+      this.ispaused = true;
+      var i = 0;
+      var timedelay = 0;
+      var speed = 2000;
+      this.punisher = setInterval(()=>{
+        if (this.ispaused) {
+          alert(this.items[i % 8]);
+          i += 1;
+          timedelay += 1;
+          if ((timedelay >= 10) && (speed >= 800)) {
+            speed = 2000 - timedelay*100;
+          }
+        }
+      },speed);
+    },
+    continueStudy: function(){
+        this.ispaused = false;
     },
     toggle:function () {
       this.$router.push('/');
@@ -153,13 +192,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#app {
+.qd3{
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+  }
+   h1, h2 {
+    font-weight: normal;
   }
   ul{
     list-style: none;
@@ -168,16 +210,56 @@ export default {
   li{
     height: 30px;
   }
+  a {
+    color: #42b983;
+  }
   .time{
     font-size: 70px;
     cursor: pointer;
   }
   .unit{
     display: inline;
+    font-size: 20px;
   }
   #back-btn{
     font-family: Arial, sans-serif;
     font-size: 20px;
-    width: 100px;
+    width: 200px;
+  }
+  #title{
+    font-size: 50px;
+    font-weight: bolder;
+    font-family: sans-serif;
+  }
+  .select-list {
+    background: transparent;
+    border-color: grey;
+    padding-left: 10px;
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 20px;
+  }
+  .btn{
+    background-color: whitesmoke;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: large;
+    cursor: pointer;
+    border-radius: 15px;
+    padding: 10px 22px;
+  }
+  .btn:hover{
+    background-color: grey;
+    color: white;
+  }
+  .btn:active {
+    background-color: grey;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
   }
 </style>
